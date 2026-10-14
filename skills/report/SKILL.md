@@ -30,10 +30,10 @@ Only these reporting endpoints exist. Do not invent others (for example `city_re
 
 | Endpoint | Method | Parameters |
 |---|---|---|
-| `ad_accounts/{ad_account_id}/aggregate_reports` | GET | Query string: `entity_type`, repeated `fields=`, `granularity`, `report_start`/`report_end`, `entity_ids` + `entity_ids_type`, `statuses` + `entity_status_type`, `limit` |
-| `ad_accounts/{ad_account_id}/aggregate_reports/totals` | GET | Query string, same naming as `aggregate_reports` |
-| `ad_accounts/{ad_account_id}/insight_reports` | GET | Query string: `insight_dimension`, repeated `fields=`, one `entity_ids` + `entity_ids_type` |
-| `ad_accounts/{ad_account_id}/async_reports` | POST | JSON body: `name`, `granularity`, `dimensions`, `metrics` (required), plus `report_start`, `report_end`, `statuses`, `campaign_ids`, `insight_dimension` |
+| `ad_accounts/{ad_account_id}/aggregate_reports` | GET | Query string: `entity_type`, repeated `fields=`, `granularity`, `report_start`/`report_end`, `include_parent_entity`, `entity_ids` + `entity_ids_type`, `statuses` + `entity_status_type`, `limit`, `continuation_token` (pass the value from the previous response to get the next page) |
+| `ad_accounts/{ad_account_id}/aggregate_reports/totals` | GET | Query string: `entity_type`, `entity_ids` (repeated), `granularity`, repeated `fields=` (all required), plus `report_start`/`report_end` |
+| `ad_accounts/{ad_account_id}/insight_reports` | GET | Query string: `insight_dimension`, repeated `fields=`, one `entity_ids` + `entity_ids_type`, `statuses` + `entity_status_type` |
+| `ad_accounts/{ad_account_id}/async_reports` | POST | JSON body: `name`, `granularity`, `dimensions`, `metrics` (required), plus `report_start`, `report_end`, `statuses`, `campaign_ids`, `insight_dimension`, `attribution_window` (check the live spec for valid values) |
 | `ad_accounts/{ad_account_id}/async_reports/{report_id}` | GET | none |
 
 GET report endpoints never take `metrics=`, `dimensions=`, or `campaign_ids=` query parameters — those names belong only in the async report JSON body. Array query parameters are always repeated (`fields=IMPRESSIONS&fields=SPEND`), never comma-joined (`fields=IMPRESSIONS,SPEND`).
