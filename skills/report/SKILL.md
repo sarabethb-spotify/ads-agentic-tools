@@ -161,15 +161,15 @@ Prompt for:
   - REACH, FREQUENCY, LISTENERS, NEW_LISTENERS, STREAMS
   - AD_COMPLETES, CTR, CPM, COMPLETION_RATE
 - **report_start** (required if granularity=DAY)
-- **report_end** (optional)
+- **report_end** (required if granularity=DAY)
 - **campaign_ids** (optional — filter to specific campaigns)
 - **statuses** (optional, default: `["ACTIVE"]`) — use only values from the `statuses` enum in the live spec for this request body; valid values also depend on the primary entity (see the field description). `ARCHIVED` and `APPROVED` are not valid. If the user asks for a status that is not valid (such as archived), say so and drop it; do not silently substitute a different status.
-- **insight_dimension** (optional) — Break down the report by a delivery insight dimension: `ACT_AND_SET`, `AGE`, `AUDIENCE`, `CITY`, `COUNTRY`, `FORMAT`, `GENDER`, `GENRE`, `INTERESTS`, `METRO`, `PLACEMENT`, `PLATFORM`, `PODCAST_EPISODE_TOPIC`, `REGION`, or `TONE`. Only supported with LIFETIME granularity.
+- **insight_dimension** (optional) — Break down the report by a delivery insight dimension; use only values from the live spec enum. Only supported with LIFETIME granularity.
 
 **Async report guardrails:**
 - Async report `dimensions` are entity metadata columns only. Do not put `CITY`, `COUNTRY`, `REGION`, `DMA`, `POSTAL_CODE`, `LOCATION`, `AGE`, `GENDER`, `PLATFORM`, `DEVICE`, or `OS` in `dimensions`; use `insight_dimension` with `granularity=LIFETIME` for async CSV delivery insight breakdowns, or `insight_reports` for direct JSON insight results.
 - Use request fields `dimensions` and `metrics`, not `groupBy`, `fields`, `dateRange`, or `entityType`.
-- If `granularity=DAY`, include `report_start`; use UTC midnight timestamps for date boundaries.
+- If `granularity=DAY`, include both `report_start` and `report_end`; use UTC midnight timestamps for date boundaries.
 - Before sending, verify every date in the body is a complete timestamp such as `2026-05-01T00:00:00Z`. If dates come from shell variables, check they are non-empty first — an unset variable produces `"T00:00:00Z"` and a 400. `report_start` must not be in the future, and `report_end` must not precede `report_start`.
 
 ```bash
