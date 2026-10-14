@@ -28,13 +28,15 @@ To retrieve settings values (TOKEN, AD_ACCOUNT_ID, AUTO_EXECUTE, BASE_URL, SDK_H
 
 Only these reporting endpoints exist. Do not invent others (for example `city_reports`, `geo_reports`, or `campaign_reports`); use `insight_reports` or `insight_dimension` for geo breakdowns.
 
-| Endpoint | Method | Parameters |
-|---|---|---|
-| `ad_accounts/{ad_account_id}/aggregate_reports` | GET | Query string: `entity_type`, repeated `fields=`, `granularity`, `report_start`/`report_end`, `include_parent_entity`, `entity_ids` + `entity_ids_type`, `statuses` + `entity_status_type`, `limit`, `continuation_token` (pass the value from the previous response to get the next page) |
-| `ad_accounts/{ad_account_id}/aggregate_reports/totals` | GET | Query string: `entity_type`, `entity_ids` (repeated), `granularity`, repeated `fields=` (all required), plus `report_start`/`report_end` |
-| `ad_accounts/{ad_account_id}/insight_reports` | GET | Query string: `insight_dimension`, repeated `fields=`, one `entity_ids` + `entity_ids_type`, `statuses` + `entity_status_type` |
-| `ad_accounts/{ad_account_id}/async_reports` | POST | JSON body: `name`, `granularity`, `dimensions`, `metrics` (required), plus `report_start`, `report_end`, `statuses`, `campaign_ids`, `insight_dimension`, `attribution_window` (check the live spec for valid values) |
-| `ad_accounts/{ad_account_id}/async_reports/{report_id}` | GET | none |
+| Endpoint | Method |
+|---|---|
+| `ad_accounts/{ad_account_id}/aggregate_reports` | GET (query string) |
+| `ad_accounts/{ad_account_id}/aggregate_reports/totals` | GET (query string) |
+| `ad_accounts/{ad_account_id}/insight_reports` | GET (query string) |
+| `ad_accounts/{ad_account_id}/async_reports` | POST (JSON body) |
+| `ad_accounts/{ad_account_id}/async_reports/{report_id}` | GET |
+
+Take parameter names, required fields, and enum values for each endpoint from the live OpenAPI document fetched in Setup; it is the parameter reference.
 
 GET report endpoints never take `metrics=`, `dimensions=`, or `campaign_ids=` query parameters — those names belong only in the async report JSON body. Array query parameters are always repeated (`fields=IMPRESSIONS&fields=SPEND`), never comma-joined (`fields=IMPRESSIONS,SPEND`).
 
@@ -161,7 +163,7 @@ Prompt for:
 - **report_start** (required if granularity=DAY)
 - **report_end** (optional)
 - **campaign_ids** (optional — filter to specific campaigns)
-- **statuses** (optional, default: `["ACTIVE"]`) — only `ACTIVE`, `COMPLETED`, `STOPPED`, `PAUSED`, `PENDING_APPROVAL`, `REJECTED`. Validity depends on the primary entity (the lowest dimension level): Ad accepts `ACTIVE`, `PENDING_APPROVAL`, `REJECTED`; Ad Set accepts `ACTIVE`, `COMPLETED`, `PENDING_APPROVAL`, `REJECTED`; Campaign accepts all six. `ARCHIVED`, `APPROVED`, and other entity statuses are not valid here — confirm with the live spec enum before sending. If the user asks for a status that is not valid (such as archived), say so and drop it; do not silently substitute a different status.
+- **statuses** (optional, default: `["ACTIVE"]`) — use only values from the `statuses` enum in the live spec for this request body; valid values also depend on the primary entity (see the field description). `ARCHIVED` and `APPROVED` are not valid. If the user asks for a status that is not valid (such as archived), say so and drop it; do not silently substitute a different status.
 - **insight_dimension** (optional) — Break down the report by a delivery insight dimension: `ACT_AND_SET`, `AGE`, `AUDIENCE`, `CITY`, `COUNTRY`, `FORMAT`, `GENDER`, `GENRE`, `INTERESTS`, `METRO`, `PLACEMENT`, `PLATFORM`, `PODCAST_EPISODE_TOPIC`, `REGION`, or `TONE`. Only supported with LIFETIME granularity.
 
 **Async report guardrails:**
