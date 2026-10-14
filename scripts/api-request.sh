@@ -98,10 +98,8 @@ for manifest in "$PLUGIN_ROOT/.codex-plugin/plugin.json" \
                 "$PLUGIN_ROOT/.claude-plugin/plugin.json" \
                 "$PLUGIN_ROOT/plugin.json"; do
   if [ -f "$manifest" ]; then
-    # Take the first quoted version value and accept only a full X.Y.Z version,
-    # so a malformed or partial manifest never yields a truncated SDK header.
-    PLUGIN_VERSION=$(sed -n 's/^[[:space:]]*"version"[[:space:]]*:[[:space:]]*"\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*[^"]*\)".*/\1/p' "$manifest" | head -1)
-    [ -n "$PLUGIN_VERSION" ] && break
+    PLUGIN_VERSION=$(grep '"version"' "$manifest" | head -1 | sed 's/.*"version" *: *"\([^"]*\)".*/\1/')
+    break
   fi
 done
 
