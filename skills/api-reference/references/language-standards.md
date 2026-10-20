@@ -195,6 +195,7 @@ Exceptions (only values the default rule gets wrong; `PUBLISH` and `BOOKABLE` ar
 - Always use the ad account's ISO 4217 code, with one space between code and amount. Code first for en-US, en-GB, en-AU, and ja. Amount first for de, fr, fr-CA, es, pt, it, and nl.
 - Minimum budget is USD 1,000.00 or the local market equivalent, for every format.
 - Detect the locale from the ad account's locale field, then its country mapped to BCP 47, then default to en-US. If you defaulted, say so once.
+- When the reply is in English for an account in another locale, numbers and currency still follow the account's locale, and dates can use day-month-year order ("1 to 30 September 2026" for a de account). US month-first order is only for en-US.
 - Abbreviate large numbers (1.2M, 500K) only when space is tight. Never abbreviate in spend confirmations.
 
 | Locale | Number | Date (full / short) | Time |
