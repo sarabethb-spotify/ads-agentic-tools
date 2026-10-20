@@ -37,5 +37,5 @@ graders:
     type: llm
     criteria: |
       The ad account is in Germany (country DE, currency EUR). The reply should use German formats for numbers, money, and dates, whatever language it's written in.
-      PASS if amounts put the number first with a comma for decimals and a period for thousands ("4.812,40 EUR"), counts use periods for thousands ("1.284.506"), and dates use German order ("1. September 2026", "1.–30. September 2026", or "01.09.2026").
-      FAIL if any amount, count, or date uses US or UK formatting, or if money uses the euro symbol.
+      PASS if amounts put the number first with a comma for decimals and a period for thousands ("4.812,40 EUR"), counts use periods for thousands ("1.284.506"), and dates use day-month-year order. German forms ("1. September 2026", "1.–30. September 2026", "01.09.2026") and, in an English reply, UK forms ("1 to 30 September 2026") are both correct.
+      FAIL if any amount or count uses US or UK number formatting, a date uses US month-first order ("September 1-30, 2026"), or money uses the euro symbol.
