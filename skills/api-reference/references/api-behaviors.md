@@ -71,3 +71,4 @@ Use this flow for `CONTENT` (Reserved Podcasts) and `FPMNG` (Reserved Music):
 - Common statuses: 400 validation error, 403 insufficient permissions, 404 not found, 422 unprocessable (e.g., insufficient insight data), 500 server error.
 - Check the wrapper's `HTTP_STATUS:` line first.
 - Retry only on network errors or 5xx, and only for idempotent methods (GET). Never retry a POST or PATCH automatically. A non-timeout 4xx means the request was received and rejected. A 5xx may mean the change was already applied, so check for the created or modified resource before suggesting a retry. For creates, follow `create-retry-safety.md`.
+- A 429 (too many requests) is a rate limit, not a failure of the request. Wait the time the response gives, then retry a GET at most once. If it is still rate-limited, stop and tell the user the wait time the API returned. Never retry a POST or PATCH on a 429 without checking whether it was applied.
