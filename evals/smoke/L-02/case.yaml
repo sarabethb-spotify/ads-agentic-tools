@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: L-02
-description: "Language case L-02. Pausing fails with a no-edit-access error. Reply states the cause, then the fix, with no raw code or HTTP status."
+description: "Language case L-02. Turn 1 (history) asked to confirm pausing Summer Tour - Weekend. After a yes, the pause fails with a no-edit-access error. Reply states the cause, then the fix, with no raw code or HTTP status."
 tags: [smoke, language, error, regression]
 execution:
   max_turns: 30
@@ -10,9 +10,11 @@ execution:
   env:
     EVAL_ADS_API_FIXTURES: .git/ads-cache
   prompt: |
-    Pause Summer Tour - Weekend.
+    /spotify-ads-api:bulk Yes, pause it.
 context:
+  # Replies to a confirmation request, so it uses settings.confirm.local.md like P4-05.
   scaffold_script: scaffold.sh
+  history_file: history.jsonl
 graders:
   - name: names-ad-set
     type: regex

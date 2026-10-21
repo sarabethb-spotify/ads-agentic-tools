@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: L-03
-description: "Language case L-03. Bulk pause where one of two ad sets fails. Reply leads with the count, names the failure, its cause, and the fix."
+description: "Language case L-03. Turn 1 (history) asked to confirm pausing both Summer Tour ad sets. After a yes, one of the two fails. Reply leads with the count, names the failure, its cause, and the fix."
 tags: [smoke, language, partial_success, regression]
 execution:
   max_turns: 30
@@ -10,9 +10,12 @@ execution:
   env:
     EVAL_ADS_API_FIXTURES: .git/ads-cache
   prompt: |
-    /spotify-ads-api:bulk Pause all the ad sets in Summer Tour.
+    /spotify-ads-api:bulk Yes, pause both on the live ad sets.
 context:
+  # Uses the default settings: with auto_execute false the bulk skill lists every
+  # write and asks again, so the yes in this turn never reaches the pauses.
   scaffold_script: scaffold.sh
+  history_file: history.jsonl
 graders:
   - name: pause-attempted-both
     type: regex
