@@ -1,2 +1,2 @@
 400
-{"errorCodes": ["INVALID.AD_SET.STATUS"], "messages": ["Status PAUSED is not allowed for draft ad sets"]}
+{"errorCodes": ["ERR-40012"], "messages": ["Status PAUSED is not allowed for draft ad sets"]}

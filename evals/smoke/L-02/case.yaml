@@ -31,7 +31,7 @@ graders:
   - name: no-raw-error
     type: regex
     weight: 2
-    pattern: 'UNAUTHORIZED|NO_EDIT_ACCESS|\b403\b|HTTP'
+    pattern: 'ERR-\d+|\b403\b|HTTP'
     match: not_contains
   - name: no-pause-claimed
     type: regex

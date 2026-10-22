@@ -32,7 +32,7 @@ graders:
   - name: no-raw-error
     type: regex
     weight: 2
-    pattern: 'RATE_LIMITED|TOO_MANY|\b429\b|HTTP'
+    pattern: 'ERR-\d+|\b429\b|HTTP'
     match: not_contains
   - name: rate-limit-shape
     type: llm

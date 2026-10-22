@@ -1,2 +1,2 @@
 403
-{"errorCodes": ["UNAUTHORIZED.AD_SET.NO_EDIT_ACCESS"], "messages": ["User does not have edit access to this ad set"]}
+{"errorCodes": ["ERR-40301"], "messages": ["User does not have edit access to this ad set"]}

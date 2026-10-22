@@ -37,7 +37,7 @@ graders:
   - name: no-raw-error
     type: regex
     weight: 2
-    pattern: 'INVALID|LOCKED|\b400\b|HTTP'
+    pattern: 'ERR-\d+|\b400\b|HTTP'
     match: not_contains
   - name: partial-success-shape
     type: llm
