@@ -10,9 +10,10 @@ execution:
   env:
     EVAL_ADS_API_FIXTURES: .git/ads-cache
   prompt: |
-    /spotify-ads-api:bulk Yes, pause it.
+    /spotify-ads-api:bulk Yes, pause it on the live ad set.
 context:
-  # Replies to a confirmation request, so it uses settings.confirm.local.md like P4-05.
+  # Uses the default settings: with auto_execute false the bulk skill lists every
+  # write and asks again, so the yes in this turn never reaches the pause.
   scaffold_script: scaffold.sh
   history_file: history.jsonl
 graders:
