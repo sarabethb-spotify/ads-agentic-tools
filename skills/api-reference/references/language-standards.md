@@ -1,6 +1,6 @@
 # Spotify Ads Language Standards
 
-Load before writing any user-facing output. Applies to every skill. Skill files add to this one and must not contradict it. Sections 1-3 put the behavior principles doc into the prompt. That doc is the source of truth for behavior, and this file is the source of truth for language. For terms not covered here, check the Ads R&D Glossary before improvising.
+Load before writing any user-facing output. Applies to every skill. Skill files add to this one and must not contradict it. Sections 1-3 set how to behave: hard limits, when to confirm, and when to act or ask. The rest sets how to say it. For a term Section 5 doesn't cover, use the plain word an advertiser would see in Spotify Ads Manager, and don't invent new terms.
 
 The examples show the target. Match their shape, not their wording. Don't reuse a phrase from an example verbatim, and vary phrasing across responses. Exception: the confirmation templates in Section 2 are templates. Follow their structure closely, filling in the real names and amounts.
 
@@ -195,7 +195,6 @@ Exceptions (only values the default rule gets wrong; `PUBLISH` and `BOOKABLE` ar
 | "Budget: USD 1.2M" (spend confirmation) | "Budget: USD 1,200,000.00" |
 
 - Always use the ad account's ISO 4217 code, with one space between code and amount. Code first for en-US, en-GB, en-AU, and ja. Amount first for de, fr, fr-CA, es, pt, it, and nl.
-- Minimum budget is USD 1,000.00 or the local market equivalent, for every format.
 - Detect the locale from the ad account's locale field, then its country mapped to BCP 47, then default to en-US. If you defaulted, say so once.
 - When the reply is in English for an account in another locale, numbers and currency still follow the account's locale, and dates can use day-month-year order ("1 to 30 September 2026" for a de account). US month-first order is only for en-US.
 - Abbreviate large numbers (1.2M, 500K) only when space is tight. Never abbreviate in spend confirmations.
@@ -257,15 +256,15 @@ Why: advertisers copy these numbers into their own reports. An invented figure o
 | "Your bid can't match the minimum clearing price in the auction because other advertisers bid higher for similar targeting, so your ads aren't entering the auction." | "Ads aren't serving because the bid cap is low. A higher cap or the default one fixes this." | Auction mechanics don't help the user fix it. |
 | "Your media file was rejected." | "The media file is over the size limit. Compress it or upload a smaller one." | One cause per message. Never merge two errors into one. |
 
-Error codes follow ADJECTIVE.NOUN.REASON (`REJECTED.BID.TOO_LOW`). On the API surface, show the code with the message. On the plugin and MCP, translate it with "This was [adjective] because the [noun] was [reason]," then add the fix. Never show the raw code there.
+When the API returns an error, read the `error_codes` and message in the response and translate them into what went wrong and how to fix it. On the API surface, show the code with the message. On the plugin and MCP, never show the raw code.
 
-| Code | Plugin message |
+| Error in the response | Plugin message |
 | --- | --- |
-| `UNAUTHORIZED.CAMPAIGN.NO_EDIT_ACCESS` | "You don't have edit access to Brand Q4. Ask an ad account admin for access, or pick a campaign you can edit." |
-| `INVALID.AD_ACCOUNT_COUNTRY_CODE.UNSUPPORTED` | "The ad account's country isn't supported for this action. Use an ad account in a supported market." |
-| `REJECTED.ASSET.PROFANE` | "The creative was rejected for profanity in the voiceover. Replace the audio and resubmit." |
+| `<code for no edit access>` | "You don't have edit access to [campaign name]. Ask an ad account admin for access, or pick a campaign you can edit." |
+| `<code for an unsupported country>` | "The ad account's country isn't supported for this action. Use an ad account in a supported market." |
+| `<code for a rejected creative>` | "The creative was rejected for [reason from the response]. [Fix for that reason], then resubmit." |
 
-- Validation: "Budget is below the USD 1,000.00 minimum. Raise it to continue."
+- Validation: "Budget is below the minimum for this ad set. Raise it to at least [minimum from the response] to continue."
 - API failure: "The ad set couldn't be created. Check that targeting and budget are within account limits."
 - Permission: "You need ad account admin access to change billing settings."
 - Missing data: "Can't pull a delivery report because Oct Launch hasn't started delivering. Data is available within 24 hours of the first impression."
