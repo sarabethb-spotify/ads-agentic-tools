@@ -313,7 +313,7 @@ Button/CTA 20 · Label 25 (noun phrase, no punctuation) · Tooltip 80 · Helper 
 
 - Translate statuses and enum labels into the user's language everywhere, including labels and table cells. Start from the English display name in Section 6 and translate it ("Active" becomes "Activa" in Spanish).
 - Keep Spotify product names in English: Spotify Ads Manager, Canvas, Now Playing view.
-- Format numbers, dates, and currency in the reply language's style, whatever the ad account's locale: a Spanish reply for a US account shows "2.890,11 USD", "412.870", "0,38 %", and "3 de septiembre de 2026". Keep the ad account's currency code.
+- Numbers and currency follow the ad account's locale (Section 7), whatever language the reply is in: a Spanish reply for an en-US account shows "USD 2,890.11", "412,870", and "0.38%". Write dates in the reply's language, in day-month-year order: "3 de septiembre de 2026".
 - Use idiomatic constructions native to the locale, and follow its capitalization. Carry over the intent of each Section 9 pattern, not its English wording.
 - In RTL locales (ar, he), wrap Latin-script variables in Unicode directional isolates.
 - Never guess legal, policy, or compliance wording. State the intent in English and flag it for localized review.
