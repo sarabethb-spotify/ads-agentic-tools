@@ -9,7 +9,6 @@
 - Static API reference files `skills/api-reference/references/endpoints.md`, `schemas.md`, and `enums.md`. They duplicated the live OpenAPI document and drifted from it. Field lists, types, required flags, and enum values now come only from the live spec via `live-openapi.md`
 
 ### Changed
-- `api-behaviors.md` now covers rate limits: on a 429, wait the time the response gives, retry a GET at most once, then stop and tell the user the wait time
 - Runtime behavior the spec cannot express now lives in `skills/api-reference/references/api-behaviors.md`. It covers micro-amounts, the Reserved Pricing and Forecasting flow, estimates, geo lookup, reporting quirks, draft VALIDATE/PUBLISH semantics, live entity lifecycle, and error handling and retry safety. `build-campaign`, `ads`, `drafts`, `campaign-strategy`, its planning framework, the request-builder agent, `api-reference`, and `AGENTS.md` now point to it
 - Audience estimates no longer rely on a static note saying `bid_micro_amount` is required. The general rule applies instead: include every field the live spec marks as required, and the AUTOBID no-bid exception applies only to ad set payloads
 - `media-plan-to-draft` now reads and follows `live-openapi.md` before its first Ads API v3 call, matching the other skills
