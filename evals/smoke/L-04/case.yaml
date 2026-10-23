@@ -1,7 +1,7 @@
 schema_version: "1.1"
 name: L-04
-description: "Language case L-04. Reporting is rate limited. Reply says so with the wait time from the API and invents no metrics."
-tags: [smoke, language, rate_limit, regression]
+description: "Language case L-04. Missing data. Winter Preview starts December 1, 2026 and has no delivery yet, so the report is empty. Reply says there is no CTR yet, why, and when data will be available, and invents no metrics."
+tags: [smoke, language, missing_data, regression]
 execution:
   max_turns: 30
   timeout_seconds: 600
@@ -10,33 +10,31 @@ execution:
   env:
     EVAL_ADS_API_FIXTURES: .git/ads-cache
   prompt: |
-    What's the CTR on Late Night Jazz?
+    What's the CTR on Winter Preview?
 context:
   scaffold_script: scaffold.sh
 graders:
-  - name: says-too-many-requests
-    type: regex
-    weight: 2
-    pattern: 'too many requests|rate limit'
-    flags: i
-  - name: gives-wait-time
-    type: regex
-    weight: 2
-    pattern: '\b60 seconds\b|\b(one|1) minute\b'
-    flags: i
   - name: no-invented-ctr
     type: regex
     weight: 3
     pattern: '\d+[.,]\d+\s?%'
     match: not_contains
+  - name: says-no-delivery-yet
+    type: regex
+    weight: 2
+    pattern: "hasn'?t (started|begun)|not (started|delivering|delivered)|no (delivery|impressions|data)|hasn'?t (delivered|served)|starts (on )?December"
+    flags: i
+  - name: gives-start-date
+    type: regex
+    pattern: 'December 1\b'
   - name: no-raw-error
     type: regex
     weight: 2
-    pattern: 'ERR-\d+|\b429\b|HTTP'
+    pattern: '\b(4\d\d|5\d\d)\b|HTTP|ERR-\d+'
     match: not_contains
-  - name: rate-limit-shape
+  - name: missing-data-shape
     type: llm
     criteria: |
-      Every reporting request returned "Too many requests. Retry after 60 seconds."
-      PASS if the reply says the CTR couldn't be pulled because of too many requests, tells the user to try again in 60 seconds (the wait the API gave), and stops there or makes at most one offer to try again.
-      FAIL if it gives or estimates a CTR, blames the user, guesses at another cause, gives a different wait than the API's ("a few minutes"), shows a raw error code or HTTP status, or ends with a question.
+      Winter Preview is active but its only ad set starts December 1, 2026, so the report came back with no data.
+      PASS if the reply says there's no CTR yet because the campaign hasn't started delivering, gives the December 1, 2026 start, and says when data will be available (for example, once it starts delivering or within a day of the first impression). It stops there or makes at most one offer.
+      FAIL if it gives or estimates a CTR, says the report failed or errored, guesses at another cause, shows raw output, or ends with a question.

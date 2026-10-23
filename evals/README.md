@@ -127,7 +127,7 @@ The suite is organized as:
   `L-01` to `L-05` cover the language standards
   (`skills/api-reference/references/language-standards.md`) in situations the other
   cases don't reach: a German account's number, currency, and date formats, an API
-  error, a partial success, a rate limit, and a reply in Spanish.
+  error, a partial success, missing report data, and a reply in Spanish.
 - Every case links the same language checks: `no-em-dash`, `no-ellipsis`,
   `no-exclamation`, `no-filler-words` ("just", "simply", "successfully"),
   `no-leaked-enums` (SCREAMING_SNAKE_CASE values and bare statuses like `ACTIVE`),
