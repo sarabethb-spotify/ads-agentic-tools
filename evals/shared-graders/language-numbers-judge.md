@@ -12,6 +12,8 @@ PASS if every money amount, number, and date in the final reply follows the rule
 
 2. Account metrics (spend, impressions, clicks, CTR, completion rate, frequency, CPM) come with a date range somewhere in the same reply, such as a heading, the sentence before, or a table column. Benchmarks for a format ("commonly quoted 0.35% to 0.50%") don't need a date range.
 
-3. Dates match the locale: "September 3, 2026" or "Sep 3 to 30, 2026" for en-US; "3 September 2026" for en-GB and en-AU; "3. September 2026" or "03.09.2026" for de (in an English reply for a de account, "3 September 2026" or "1 to 30 September 2026" is also correct); "3 de septiembre de 2026" in Spanish replies. ISO dates (2026-09-03) aren't allowed unless the user asked for raw output.
+3. Dates match the locale: "September 3, 2026" or "Sep 3 to 30, 2026" for en-US; "3 September 2026" for en-GB and en-AU; "3. September 2026" or "03.09.2026" for de (in an English reply for a de account, "3 September 2026" or "1 to 30 September 2026" is also correct); "3 de septiembre de 2026" in Spanish replies.
+
+   A reply in a language other than English formats numbers, money, and dates in that language's style, whatever the account's locale, and keeps the account's currency code: a Spanish reply for a US account shows "2.890,11 USD", "412.870", and "0,38 %". ISO dates (2026-09-03) aren't allowed unless the user asked for raw output.
 
 4. Estimates and forecasts are labeled as estimates. Confirmed numbers aren't hedged. A caveat that data is incomplete ("this report only runs through September 30, so October isn't included") is a correct label, not a hedge.

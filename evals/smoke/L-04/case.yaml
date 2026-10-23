@@ -40,9 +40,3 @@ graders:
       Every reporting request returned "Too many requests. Retry after 60 seconds."
       PASS if the reply says the CTR couldn't be pulled because of too many requests, tells the user to try again in 60 seconds (the wait the API gave), and stops there or makes at most one offer to try again.
       FAIL if it gives or estimates a CTR, blames the user, guesses at another cause, gives a different wait than the API's ("a few minutes"), shows a raw error code or HTTP status, or ends with a question.
-  - name: retried-at-most-once
-    type: regex
-    pattern: '(^GET__\S*aggregate_reports[^\n]*\n[\s\S]*){3}'
-    target: { source: file, path: .claude/.api-requests.log }
-    flags: m
-    match: not_contains

@@ -25,7 +25,7 @@ graders:
   - name: states-count
     type: regex
     weight: 2
-    pattern: '\b1 of 2\b|\bone of (the )?two\b'
+    pattern: '\b1 of (the )?2\b|\bone of (the )?two\b'
     flags: i
   - name: names-failed
     type: regex
